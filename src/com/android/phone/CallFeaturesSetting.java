@@ -303,7 +303,7 @@ public class CallFeaturesSetting extends PreferenceActivity
     private AccountSelectionPreference mDefaultOutgoingAccount;
     private boolean isSpeedDialListStarted = false;
     private PreferenceScreen mButtonBlacklist;
-    private ListPreference mCallRecordingFormat;
+    private SwitchPreference mButtonProximity;
 
     private SwitchPreference mProxSpeaker;
     private SlimSeekBarPreference mProxSpeakerDelay;
@@ -689,12 +689,12 @@ public class CallFeaturesSetting extends PreferenceActivity
             Settings.System.putInt(cr, Settings.System.CALL_RECORDING_FORMAT, value);
         } else if (preference == mProxSpeakerDelay) {
             int delay = Integer.valueOf((String) objValue);
-            Settings.System.putInt(getContentResolver(),
+            Settings.System.putInt(cr,
                     Settings.System.PROXIMITY_AUTO_SPEAKER_DELAY, delay);
         } else if (preference == mCallRecordingFormat) {
             int value = Integer.valueOf((String) objValue);
             int index = mCallRecordingFormat.findIndexOfValue((String) objValue);
-            Settings.System.putInt(getContentResolver(), Settings.System.CALL_RECORDING_FORMAT, value);
+            Settings.System.putInt(cr, Settings.System.CALL_RECORDING_FORMAT, value);
             mCallRecordingFormat.setSummary(mCallRecordingFormat.getEntries()[index]);
         }
         // always let the preference setting proceed.
