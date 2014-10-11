@@ -296,6 +296,7 @@ public class CallFeaturesSetting extends PreferenceActivity
     private AccountSelectionPreference mDefaultOutgoingAccount;
     private boolean isSpeedDialListStarted = false;
     private PreferenceScreen mButtonBlacklist;
+    private ListPreference mCallRecordingFormat;
 
     private class VoiceMailProvider {
         public VoiceMailProvider(String name, Intent intent) {
@@ -668,6 +669,14 @@ public class CallFeaturesSetting extends PreferenceActivity
             int value = Integer.valueOf((String) objValue);
             int index = mCallRecordingFormat.findIndexOfValue((String) objValue);
             Settings.System.putInt(cr, Settings.System.CALL_RECORDING_FORMAT, value);
+        } else if (preference == mProxSpeakerDelay) {
+            int delay = Integer.valueOf((String) objValue);
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.PROXIMITY_AUTO_SPEAKER_DELAY, delay);
+        } else if (preference == mCallRecordingFormat) {
+            int value = Integer.valueOf((String) objValue);
+            int index = mCallRecordingFormat.findIndexOfValue((String) objValue);
+            Settings.System.putInt(getContentResolver(), Settings.System.CALL_RECORDING_FORMAT, value);
             mCallRecordingFormat.setSummary(mCallRecordingFormat.getEntries()[index]);
         }
         // always let the preference setting proceed.
@@ -1735,8 +1744,9 @@ public class CallFeaturesSetting extends PreferenceActivity
             mVoicemailNotificationVibrate =
                     (SwitchPreference) findPreference(BUTTON_VOICEMAIL_NOTIFICATION_VIBRATE_KEY);
             initVoiceMailProviders();
-        }
 
+        mCallRecordingFormat = (ListPreference) findPreference(CALL_RECORDING_FORMAT);
+        }
 
         if (mButtonDTMF != null) {
             if (getResources().getBoolean(R.bool.dtmf_type_enabled)) {
@@ -1786,6 +1796,46 @@ public class CallFeaturesSetting extends PreferenceActivity
                 prefSet.removePreference(mButtonTTY);
                 mButtonTTY = null;
             }
+        }
+
+        final ContentResolver contentResolver = getContentResolver();
+
+        if (mProxSpeaker != null) {
+            PowerManager pm = (PowerManager) this.getSystemService(Context.POWER_SERVICE);
+            if (pm.isWakeLockLevelSupported(
+                    PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK)
+                    && getResources().getBoolean(R.bool.config_enabled_speakerprox)) {
+                mProxSpeaker.setChecked(Settings.System.getInt(contentResolver,
+                        Settings.System.PROXIMITY_AUTO_SPEAKER, 0) == 1);
+                if (mProxSpeakerIncallOnly != null) {
+                    mProxSpeakerIncallOnly.setChecked(Settings.System.getInt(contentResolver,
+                            Settings.System.PROXIMITY_AUTO_SPEAKER_INCALL_ONLY, 0) == 1);
+                }
+                if (mProxSpeakerDelay != null) {
+                    final int proxDelay = Settings.System.getInt(getContentResolver(),
+                            Settings.System.PROXIMITY_AUTO_SPEAKER_DELAY, 100);
+                    // minimum 100 is 1 interval of the 100 multiplier 
+                    mProxSpeakerDelay.setInitValue((proxDelay / 100) - 1);
+                }
+            } else {
+                prefSet.removePreference(mProxSpeaker);
+                mProxSpeaker = null;
+                if (mProxSpeakerIncallOnly != null) {
+                    prefSet.removePreference(mProxSpeakerIncallOnly);
+                    mProxSpeakerIncallOnly = null;
+                }
+                if (mProxSpeakerDelay != null) {
+                    prefSet.removePreference(mProxSpeakerDelay);
+                    mProxSpeakerDelay = null;
+                }
+            }
+		}
+			
+        if (mCallRecordingFormat != null) {
+            int format = Settings.System.getInt(getContentResolver(), Settings.System.CALL_RECORDING_FORMAT, 0);
+            mCallRecordingFormat.setValue(String.valueOf(format));
+            mCallRecordingFormat.setSummary(mCallRecordingFormat.getEntry());
+            mCallRecordingFormat.setOnPreferenceChangeListener(this);
         }
 
         boolean isWorldPhone = getResources().getBoolean(R.bool.world_phone);
