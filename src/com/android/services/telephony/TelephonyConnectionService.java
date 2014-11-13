@@ -200,10 +200,7 @@ public class TelephonyConnectionService extends ConnectionService {
         // when voice RAT is OOS but Data RAT is present.
         int state = phone.getServiceState().getState();
         if (state == ServiceState.STATE_OUT_OF_SERVICE) {
-            if (phone.getServiceState().getDataNetworkType() ==
-                    ServiceState.RIL_RADIO_TECHNOLOGY_LTE) {
-                state = phone.getServiceState().getDataRegState();
-            }
+            state = phone.getServiceState().getDataRegState();
         }
         boolean useEmergencyCallHelper = false;
 
