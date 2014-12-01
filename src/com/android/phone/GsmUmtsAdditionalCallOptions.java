@@ -78,7 +78,7 @@ public class GsmUmtsAdditionalCallOptions extends
         if (mInitIndex < mPreferences.size()-1 && !isFinishing()) {
             mInitIndex++;
             Preference pref = mPreferences.get(mInitIndex);
-            if (pref instanceof CallWaitingCheckBoxPreference) {
+            if (pref instanceof CallWaitingSwitchPreference) {
                 ((CallWaitingSwitchPreference) pref).init(this, false, mPhoneId);
             }
         }
