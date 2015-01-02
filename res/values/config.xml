@@ -163,4 +163,8 @@
     <bool name="config_uplmn_for_usim">false</bool>
     <!-- Disable data before manual PLMN scan if true-->
     <bool name="config_disable_data_manual_plmn">true</bool>
+
+    <!-- Disable speaker proximity preference for problematic devices -->
+    <bool name="config_enabled_speakerprox" translatable="false">true</bool>
+
 </resources>
