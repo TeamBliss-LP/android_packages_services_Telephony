@@ -1729,7 +1729,6 @@ public class CallFeaturesSetting extends PreferenceActivity
             }
         }
 
-<<<<<<< HEAD
         if (mButtonNoiseSuppression != null) {
             if (getResources().getBoolean(R.bool.has_in_call_noise_suppression)) {
                 mButtonNoiseSuppression.setOnPreferenceChangeListener(this);
