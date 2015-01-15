@@ -387,9 +387,8 @@ public class TelephonyConnectionService extends ConnectionService {
         if (phoneType == TelephonyManager.PHONE_TYPE_GSM) {
             boolean isForwarded = extras != null
                     && extras.getBoolean(TelephonyManager.EXTRA_IS_FORWARDED, false);
-            GsmConnection connection = new GsmConnection(originalConnection, isForwarded);
-            mGsmConferenceController[phoneId].add(connection);
-            return connection;
+            returnConnection = new GsmConnection(originalConnection, isForwarded);
+
         } else if (phoneType == TelephonyManager.PHONE_TYPE_CDMA) {
             boolean allowMute = allowMute(phone);
             CdmaConnection connection = new CdmaConnection(
