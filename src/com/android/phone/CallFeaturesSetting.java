@@ -37,15 +37,14 @@ import android.os.AsyncResult;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemProperties;
 import android.os.PowerManager;
+import android.os.SystemProperties;
 import android.os.UserHandle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
-import android.preference.SlimSeekBarPreference;
 import android.preference.SwitchPreference;
 import android.provider.ContactsContract.CommonDataKinds;
 import android.provider.Settings;
@@ -188,7 +187,6 @@ public class CallFeaturesSetting extends PreferenceActivity
     private static final String BUTTON_NOISE_SUPPRESSION_KEY = "button_noise_suppression_key";
 
     private static final String PROX_AUTO_SPEAKER  = "prox_auto_speaker";
-    private static final String PROX_AUTO_SPEAKER_DELAY  = "prox_auto_speaker_delay";
     private static final String PROX_AUTO_SPEAKER_INCALL_ONLY  = "prox_auto_speaker_incall_only";
 
     private static final String BUTTON_GSM_UMTS_OPTIONS = "button_gsm_more_expand_key";
@@ -291,7 +289,6 @@ public class CallFeaturesSetting extends PreferenceActivity
     private PreferenceScreen mButtonBlacklist;
 
     private SwitchPreference mProxSpeaker;
-    private SlimSeekBarPreference mProxSpeakerDelay;
     private SwitchPreference mProxSpeakerIncallOnly;
 
     private class VoiceMailProvider {
@@ -667,12 +664,9 @@ public class CallFeaturesSetting extends PreferenceActivity
             // Update HAC value in Settings database
             Settings.System.putInt(mPhone.getContext().getContentResolver(),
                     Settings.System.HEARING_AID, hac);
+
             // Update HAC Value in AudioManager
             mAudioManager.setParameter(HAC_KEY, hac != 0 ? HAC_VAL_ON : HAC_VAL_OFF);
-        } else if (preference == mProxSpeakerDelay) {
-            int delay = Integer.valueOf((String) objValue);
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.PROXIMITY_AUTO_SPEAKER_DELAY, delay);
         }
         // always let the preference setting proceed.
         return true;
@@ -1690,15 +1684,6 @@ public class CallFeaturesSetting extends PreferenceActivity
 
         mProxSpeaker = (SwitchPreference) findPreference(PROX_AUTO_SPEAKER);
         mProxSpeakerIncallOnly = (SwitchPreference) findPreference(PROX_AUTO_SPEAKER_INCALL_ONLY);
-        mProxSpeakerDelay = (SlimSeekBarPreference) findPreference(PROX_AUTO_SPEAKER_DELAY);
-        if (mProxSpeakerDelay != null) {
-            mProxSpeakerDelay.setDefault(100);
-            mProxSpeakerDelay.isMilliseconds(true);
-            mProxSpeakerDelay.setInterval(1);
-            mProxSpeakerDelay.minimumValue(100);
-            mProxSpeakerDelay.multiplyValue(100);
-            mProxSpeakerDelay.setOnPreferenceChangeListener(this);
-        }
 
         if (mVoicemailProviders != null) {
             mVoicemailProviders.setOnPreferenceChangeListener(this);
@@ -1785,22 +1770,12 @@ public class CallFeaturesSetting extends PreferenceActivity
                     mProxSpeakerIncallOnly.setChecked(Settings.System.getInt(contentResolver,
                             Settings.System.PROXIMITY_AUTO_SPEAKER_INCALL_ONLY, 0) == 1);
                 }
-                if (mProxSpeakerDelay != null) {
-                    final int proxDelay = Settings.System.getInt(getContentResolver(),
-                            Settings.System.PROXIMITY_AUTO_SPEAKER_DELAY, 100);
-                    // minimum 100 is 1 interval of the 100 multiplier 
-                    mProxSpeakerDelay.setInitValue((proxDelay / 100) - 1);
-                }
             } else {
                 prefSet.removePreference(mProxSpeaker);
                 mProxSpeaker = null;
                 if (mProxSpeakerIncallOnly != null) {
                     prefSet.removePreference(mProxSpeakerIncallOnly);
                     mProxSpeakerIncallOnly = null;
-                }
-                if (mProxSpeakerDelay != null) {
-                    prefSet.removePreference(mProxSpeakerDelay);
-                    mProxSpeakerDelay = null;
                 }
             }
         }
