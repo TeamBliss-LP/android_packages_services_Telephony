@@ -9,31 +9,31 @@ import android.content.Context;
 import android.os.AsyncResult;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.SwitchPreference;
+import android.preference.CheckBoxPreference;
 import android.util.AttributeSet;
 import android.util.Log;
 
 import com.android.internal.telephony.Phone;
 
-public class CallWaitingSwitchPreference extends SwitchPreference {
-    private static final String LOG_TAG = "CallWaitingSwitchPreference";
+public class CallWaitingCheckBoxPreference extends CheckBoxPreference {
+    private static final String LOG_TAG = "CallWaitingCheckBoxPreference";
     private final boolean DBG = (PhoneGlobals.DBG_LEVEL >= 2);
 
     private final MyHandler mHandler = new MyHandler();
     private Phone mPhone;
     private TimeConsumingPreferenceListener mTcpListener;
 
-    public CallWaitingSwitchPreference(Context context, AttributeSet attrs, int defStyle) {
+    public CallWaitingCheckBoxPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
         mPhone = PhoneGlobals.getPhone();
     }
 
-    public CallWaitingSwitchPreference(Context context, AttributeSet attrs) {
-        this(context, attrs, com.android.internal.R.attr.switchPreferenceStyle);
+    public CallWaitingCheckBoxPreference(Context context, AttributeSet attrs) {
+        this(context, attrs, com.android.internal.R.attr.checkBoxPreferenceStyle);
     }
 
-    public CallWaitingSwitchPreference(Context context) {
+    public CallWaitingCheckBoxPreference(Context context) {
         this(context, null);
     }
 
@@ -85,9 +85,9 @@ public class CallWaitingSwitchPreference extends SwitchPreference {
 
             if (mTcpListener != null) {
                 if (msg.arg2 == MESSAGE_SET_CALL_WAITING) {
-                    mTcpListener.onFinished(CallWaitingSwitchPreference.this, false);
+                    mTcpListener.onFinished(CallWaitingCheckBoxPreference.this, false);
                 } else {
-                    mTcpListener.onFinished(CallWaitingSwitchPreference.this, true);
+                    mTcpListener.onFinished(CallWaitingCheckBoxPreference.this, true);
                 }
             }
 
@@ -96,12 +96,12 @@ public class CallWaitingSwitchPreference extends SwitchPreference {
                     Log.d(LOG_TAG, "handleGetCallWaitingResponse: ar.exception=" + ar.exception);
                 }
                 if (mTcpListener != null) {
-                    mTcpListener.onException(CallWaitingSwitchPreference.this,
+                    mTcpListener.onException(CallWaitingCheckBoxPreference.this,
                             (CommandException)ar.exception);
                 }
             } else if (ar.userObj instanceof Throwable) {
                 if (mTcpListener != null) {
-                    mTcpListener.onError(CallWaitingSwitchPreference.this, RESPONSE_ERROR);
+                    mTcpListener.onError(CallWaitingCheckBoxPreference.this, RESPONSE_ERROR);
                 }
             } else {
                 if (DBG) {

@@ -18,11 +18,11 @@
 package com.android.phone;
 
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.preference.PreferenceActivity;
-import android.preference.SwitchPreference;
 import com.android.internal.telephony.Phone;
 import com.android.internal.telephony.RILConstants;
 
@@ -125,45 +125,45 @@ public class CellBroadcastSms extends PreferenceActivity
     private static final int MESSAGE_SET_CB_SMS_CONFIG = 3;
 
     //UI objects
-    private SwitchPreference mButtonBcSms;
+    private CheckBoxPreference mButtonBcSms;
 
     private ListPreference mListLanguage;
 
-    private SwitchPreference mButtonEmergencyBroadcast;
-    private SwitchPreference mButtonAdministrative;
-    private SwitchPreference mButtonMaintenance;
-    private SwitchPreference mButtonLocalWeather;
-    private SwitchPreference mButtonAtr;
-    private SwitchPreference mButtonLafs;
-    private SwitchPreference mButtonRestaurants;
-    private SwitchPreference mButtonLodgings;
-    private SwitchPreference mButtonRetailDirectory;
-    private SwitchPreference mButtonAdvertisements;
-    private SwitchPreference mButtonStockQuotes;
-    private SwitchPreference mButtonEo;
-    private SwitchPreference mButtonMhh;
-    private SwitchPreference mButtonTechnologyNews;
-    private SwitchPreference mButtonMultiCategory;
+    private CheckBoxPreference mButtonEmergencyBroadcast;
+    private CheckBoxPreference mButtonAdministrative;
+    private CheckBoxPreference mButtonMaintenance;
+    private CheckBoxPreference mButtonLocalWeather;
+    private CheckBoxPreference mButtonAtr;
+    private CheckBoxPreference mButtonLafs;
+    private CheckBoxPreference mButtonRestaurants;
+    private CheckBoxPreference mButtonLodgings;
+    private CheckBoxPreference mButtonRetailDirectory;
+    private CheckBoxPreference mButtonAdvertisements;
+    private CheckBoxPreference mButtonStockQuotes;
+    private CheckBoxPreference mButtonEo;
+    private CheckBoxPreference mButtonMhh;
+    private CheckBoxPreference mButtonTechnologyNews;
+    private CheckBoxPreference mButtonMultiCategory;
 
-    private SwitchPreference mButtonLocal1;
-    private SwitchPreference mButtonRegional1;
-    private SwitchPreference mButtonNational1;
-    private SwitchPreference mButtonInternational1;
+    private CheckBoxPreference mButtonLocal1;
+    private CheckBoxPreference mButtonRegional1;
+    private CheckBoxPreference mButtonNational1;
+    private CheckBoxPreference mButtonInternational1;
 
-    private SwitchPreference mButtonLocal2;
-    private SwitchPreference mButtonRegional2;
-    private SwitchPreference mButtonNational2;
-    private SwitchPreference mButtonInternational2;
+    private CheckBoxPreference mButtonLocal2;
+    private CheckBoxPreference mButtonRegional2;
+    private CheckBoxPreference mButtonNational2;
+    private CheckBoxPreference mButtonInternational2;
 
-    private SwitchPreference mButtonLocal3;
-    private SwitchPreference mButtonRegional3;
-    private SwitchPreference mButtonNational3;
-    private SwitchPreference mButtonInternational3;
+    private CheckBoxPreference mButtonLocal3;
+    private CheckBoxPreference mButtonRegional3;
+    private CheckBoxPreference mButtonNational3;
+    private CheckBoxPreference mButtonInternational3;
 
-    private SwitchPreference mButtonLocal4;
-    private SwitchPreference mButtonRegional4;
-    private SwitchPreference mButtonNational4;
-    private SwitchPreference mButtonInternational4;
+    private CheckBoxPreference mButtonLocal4;
+    private CheckBoxPreference mButtonRegional4;
+    private CheckBoxPreference mButtonNational4;
+    private CheckBoxPreference mButtonInternational4;
 
 
     //Member variables
@@ -178,24 +178,9 @@ public class CellBroadcastSms extends PreferenceActivity
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
             Preference preference) {
-        if (preference == mListLanguage) {
-            //Do nothing here, because this click will be handled in onPreferenceChange
-        } else {
-            preferenceScreen.setEnabled(false);
-            return false;
-        }
-
-        return true;
-    }
-
-    public boolean onPreferenceChange(Preference preference, Object objValue) {
-        if (preference == mListLanguage) {
-            // set the new language to the array which will be transmitted later
-            CellBroadcastSmsConfig.setConfigDataCompleteLanguage(
-                    mListLanguage.findIndexOfValue((String) objValue) + 1);
-        } else if (preference == mButtonBcSms) {
+        if (preference == mButtonBcSms) {
             if (DBG) Log.d(LOG_TAG, "onPreferenceTreeClick: preference == mButtonBcSms.");
-            if ((Boolean) objValue) {
+            if(mButtonBcSms.isChecked()) {
                 mPhone.activateCellBroadcastSms(RILConstants.CDMA_CELL_BROADCAST_SMS_ENABLED,
                         Message.obtain(mHandler, MESSAGE_ACTIVATE_CB_SMS));
                 android.provider.Settings.Global.putInt(mPhone.getContext().getContentResolver(),
@@ -210,122 +195,137 @@ public class CellBroadcastSms extends PreferenceActivity
                         RILConstants.CDMA_CELL_BROADCAST_SMS_DISABLED);
                 enableDisableAllCbConfigButtons(false);
             }
+        } else if (preference == mListLanguage) {
+            //Do nothing here, because this click will be handled in onPreferenceChange
         } else if (preference == mButtonEmergencyBroadcast) {
             CellBroadcastSmsConfig.setConfigDataCompleteBSelected(
-                    (Boolean) objValue, 1);
+                    mButtonEmergencyBroadcast.isChecked(), 1);
             CellBroadcastSmsConfig.setCbSmsBSelectedValue(
-                    (Boolean) objValue, 1);
+                    mButtonEmergencyBroadcast.isChecked(), 1);
         } else if (preference == mButtonAdministrative) {
             CellBroadcastSmsConfig.setConfigDataCompleteBSelected(
-                    (Boolean) objValue, 2);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 2);
+                    mButtonAdministrative.isChecked(), 2);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonAdministrative.isChecked(), 2);
         } else if (preference == mButtonMaintenance) {
             CellBroadcastSmsConfig.setConfigDataCompleteBSelected(
-                    (Boolean) objValue, 3);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 3);
+                    mButtonMaintenance.isChecked(), 3);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonMaintenance.isChecked(), 3);
         } else if (preference == mButtonLocalWeather) {
             CellBroadcastSmsConfig.setConfigDataCompleteBSelected(
-                    (Boolean) objValue, 20);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 20);
+                    mButtonLocalWeather.isChecked(), 20);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonLocalWeather.isChecked(), 20);
         } else if (preference == mButtonAtr) {
-            CellBroadcastSmsConfig.setConfigDataCompleteBSelected((Boolean) objValue, 21);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 21);
+            CellBroadcastSmsConfig.setConfigDataCompleteBSelected(mButtonAtr.isChecked(), 21);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonAtr.isChecked(), 21);
         } else if (preference == mButtonLafs) {
-            CellBroadcastSmsConfig.setConfigDataCompleteBSelected((Boolean) objValue, 22);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 22);
+            CellBroadcastSmsConfig.setConfigDataCompleteBSelected(mButtonLafs.isChecked(), 22);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonLafs.isChecked(), 22);
         } else if (preference == mButtonRestaurants) {
             CellBroadcastSmsConfig.setConfigDataCompleteBSelected(
-                    (Boolean) objValue, 23);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 23);
+                    mButtonRestaurants.isChecked(), 23);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonRestaurants.isChecked(), 23);
         } else if (preference == mButtonLodgings) {
-            CellBroadcastSmsConfig.setConfigDataCompleteBSelected((Boolean) objValue, 24);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 24);
+            CellBroadcastSmsConfig.setConfigDataCompleteBSelected(mButtonLodgings.isChecked(), 24);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonLodgings.isChecked(), 24);
         } else if (preference == mButtonRetailDirectory) {
             CellBroadcastSmsConfig.setConfigDataCompleteBSelected(
-                    (Boolean) objValue, 25);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 25);
+                    mButtonRetailDirectory.isChecked(), 25);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonRetailDirectory.isChecked(), 25);
         } else if (preference == mButtonAdvertisements) {
             CellBroadcastSmsConfig.setConfigDataCompleteBSelected(
-                    (Boolean) objValue, 26);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 26);
+                    mButtonAdvertisements.isChecked(), 26);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonAdvertisements.isChecked(), 26);
         } else if (preference == mButtonStockQuotes) {
             CellBroadcastSmsConfig.setConfigDataCompleteBSelected(
-                    (Boolean) objValue, 27);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 27);
+                    mButtonStockQuotes.isChecked(), 27);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonStockQuotes.isChecked(), 27);
         } else if (preference == mButtonEo) {
-            CellBroadcastSmsConfig.setConfigDataCompleteBSelected((Boolean) objValue, 28);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 28);
+            CellBroadcastSmsConfig.setConfigDataCompleteBSelected(mButtonEo.isChecked(), 28);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonEo.isChecked(), 28);
         } else if (preference == mButtonMhh) {
-            CellBroadcastSmsConfig.setConfigDataCompleteBSelected((Boolean) objValue, 29);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 29);
+            CellBroadcastSmsConfig.setConfigDataCompleteBSelected(mButtonMhh.isChecked(), 29);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonMhh.isChecked(), 29);
         } else if (preference == mButtonTechnologyNews) {
             CellBroadcastSmsConfig.setConfigDataCompleteBSelected(
-                    (Boolean) objValue, 30);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 30);
+                    mButtonTechnologyNews.isChecked(), 30);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonTechnologyNews.isChecked(), 30);
         } else if (preference == mButtonMultiCategory) {
             CellBroadcastSmsConfig.setConfigDataCompleteBSelected(
-                    (Boolean) objValue, 31);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 31);
+                    mButtonMultiCategory.isChecked(), 31);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonMultiCategory.isChecked(), 31);
         } else if (preference == mButtonLocal1) {
-            CellBroadcastSmsConfig.setConfigDataCompleteBSelected((Boolean) objValue, 4);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 4);
+            CellBroadcastSmsConfig.setConfigDataCompleteBSelected(mButtonLocal1.isChecked(), 4);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonLocal1.isChecked(), 4);
         } else if (preference == mButtonRegional1) {
             CellBroadcastSmsConfig.setConfigDataCompleteBSelected(
-                    (Boolean) objValue, 5);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 5);
+                    mButtonRegional1.isChecked(), 5);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonRegional1.isChecked(), 5);
         } else if (preference == mButtonNational1) {
             CellBroadcastSmsConfig.setConfigDataCompleteBSelected(
-                    (Boolean) objValue, 6);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 6);
+                    mButtonNational1.isChecked(), 6);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonNational1.isChecked(), 6);
         } else if (preference == mButtonInternational1) {
             CellBroadcastSmsConfig.setConfigDataCompleteBSelected(
-                    (Boolean) objValue, 7);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 7);
+                    mButtonInternational1.isChecked(), 7);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonInternational1.isChecked(), 7);
         } else if (preference == mButtonLocal2) {
-            CellBroadcastSmsConfig.setConfigDataCompleteBSelected((Boolean) objValue, 8);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 8);
+            CellBroadcastSmsConfig.setConfigDataCompleteBSelected(mButtonLocal2.isChecked(), 8);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonLocal2.isChecked(), 8);
         } else if (preference == mButtonRegional2) {
             CellBroadcastSmsConfig.setConfigDataCompleteBSelected(
-                    (Boolean) objValue, 9);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 9);
+                    mButtonRegional2.isChecked(), 9);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonRegional2.isChecked(), 9);
         } else if (preference == mButtonNational2) {
             CellBroadcastSmsConfig.setConfigDataCompleteBSelected(
-                    (Boolean) objValue, 10);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 10);
+                    mButtonNational2.isChecked(), 10);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonNational2.isChecked(), 10);
         } else if (preference == mButtonInternational2) {
             CellBroadcastSmsConfig.setConfigDataCompleteBSelected(
-                    (Boolean) objValue, 11);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 11);
+                    mButtonInternational2.isChecked(), 11);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonInternational2.isChecked(), 11);
         } else if (preference == mButtonLocal3) {
-            CellBroadcastSmsConfig.setConfigDataCompleteBSelected((Boolean) objValue, 12);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 12);
+            CellBroadcastSmsConfig.setConfigDataCompleteBSelected(mButtonLocal3.isChecked(), 12);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonLocal3.isChecked(), 12);
         } else if (preference == mButtonRegional3) {
             CellBroadcastSmsConfig.setConfigDataCompleteBSelected(
-                    (Boolean) objValue, 13);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 13);
+                    mButtonRegional3.isChecked(), 13);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonRegional3.isChecked(), 13);
         } else if (preference == mButtonNational3) {
             CellBroadcastSmsConfig.setConfigDataCompleteBSelected(
-                    (Boolean) objValue, 14);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 14);
+                    mButtonNational3.isChecked(), 14);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonNational3.isChecked(), 14);
         } else if (preference == mButtonInternational3) {
             CellBroadcastSmsConfig.setConfigDataCompleteBSelected(
-                    (Boolean) objValue, 15);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 15);
+                    mButtonInternational3.isChecked(), 15);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonInternational3.isChecked(), 15);
         } else if (preference == mButtonLocal4) {
-            CellBroadcastSmsConfig.setConfigDataCompleteBSelected((Boolean) objValue, 16);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 16);
+            CellBroadcastSmsConfig.setConfigDataCompleteBSelected(mButtonLocal4.isChecked(), 16);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonLocal4.isChecked(), 16);
         } else if (preference == mButtonRegional4) {
             CellBroadcastSmsConfig.setConfigDataCompleteBSelected(
-                    (Boolean) objValue, 17);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 17);
+                    mButtonRegional4.isChecked(), 17);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonRegional4.isChecked(), 17);
         } else if (preference == mButtonNational4) {
             CellBroadcastSmsConfig.setConfigDataCompleteBSelected(
-                    (Boolean) objValue, 18);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 18);
+                    mButtonNational4.isChecked(), 18);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonNational4.isChecked(), 18);
         } else if (preference == mButtonInternational4) {
             CellBroadcastSmsConfig.setConfigDataCompleteBSelected(
-                    (Boolean) objValue, 19);
-            CellBroadcastSmsConfig.setCbSmsBSelectedValue((Boolean) objValue, 19);
+                    mButtonInternational4.isChecked(), 19);
+            CellBroadcastSmsConfig.setCbSmsBSelectedValue(mButtonInternational4.isChecked(), 19);
+        } else {
+            preferenceScreen.setEnabled(false);
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean onPreferenceChange(Preference preference, Object objValue) {
+        if (preference == mListLanguage) {
+            // set the new language to the array which will be transmitted later
+            CellBroadcastSmsConfig.setConfigDataCompleteLanguage(
+                    mListLanguage.findIndexOfValue((String) objValue) + 1);
         }
 
         // always let the preference setting proceed.
@@ -342,109 +342,78 @@ public class CellBroadcastSms extends PreferenceActivity
 
         PreferenceScreen prefSet = getPreferenceScreen();
 
-        mButtonBcSms = (SwitchPreference) prefSet.findPreference(
+        mButtonBcSms = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_ENABLE_DISABLE_BC_SMS_KEY);
         mListLanguage = (ListPreference) prefSet.findPreference(
                 LIST_LANGUAGE_KEY);
         // set the listener for the language list preference
         mListLanguage.setOnPreferenceChangeListener(this);
-        mButtonEmergencyBroadcast = (SwitchPreference) prefSet.findPreference(
+        mButtonEmergencyBroadcast = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_EMERGENCY_BROADCAST_KEY);
-        mButtonEmergencyBroadcast.setOnPreferenceChangeListener(this);
-        mButtonAdministrative = (SwitchPreference) prefSet.findPreference(
+        mButtonAdministrative = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_ADMINISTRATIVE_KEY);
-        mButtonAdministrative.setOnPreferenceChangeListener(this);
-        mButtonMaintenance = (SwitchPreference) prefSet.findPreference(
+        mButtonMaintenance = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_MAINTENANCE_KEY);
-        mButtonMaintenance.setOnPreferenceChangeListener(this);
-        mButtonLocalWeather = (SwitchPreference) prefSet.findPreference(
+        mButtonLocalWeather = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_LOCAL_WEATHER_KEY);
-        mButtonLocalWeather.setOnPreferenceChangeListener(this);
-        mButtonAtr = (SwitchPreference) prefSet.findPreference(
+        mButtonAtr = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_ATR_KEY);
-        mButtonAtr.setOnPreferenceChangeListener(this);
-        mButtonLafs = (SwitchPreference) prefSet.findPreference(
+        mButtonLafs = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_LAFS_KEY);
-        mButtonLafs.setOnPreferenceChangeListener(this);
-        mButtonRestaurants = (SwitchPreference) prefSet.findPreference(
+        mButtonRestaurants = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_RESTAURANTS_KEY);
-        mButtonRestaurants.setOnPreferenceChangeListener(this);
-        mButtonLodgings = (SwitchPreference) prefSet.findPreference(
+        mButtonLodgings = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_LODGINGS_KEY);
-        mButtonLodgings.setOnPreferenceChangeListener(this);
-        mButtonRetailDirectory = (SwitchPreference) prefSet.findPreference(
+        mButtonRetailDirectory = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_RETAIL_DIRECTORY_KEY);
-        mButtonRetailDirectory.setOnPreferenceChangeListener(this);
-        mButtonAdvertisements = (SwitchPreference) prefSet.findPreference(
+        mButtonAdvertisements = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_ADVERTISEMENTS_KEY);
-        mButtonAdvertisements.setOnPreferenceChangeListener(this);
-        mButtonStockQuotes = (SwitchPreference) prefSet.findPreference(
+        mButtonStockQuotes = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_STOCK_QUOTES_KEY);
-        mButtonStockQuotes.setOnPreferenceChangeListener(this);
-        mButtonEo = (SwitchPreference) prefSet.findPreference(
+        mButtonEo = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_EO_KEY);
-        mButtonEo.setOnPreferenceChangeListener(this);
-        mButtonMhh = (SwitchPreference) prefSet.findPreference(
+        mButtonMhh = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_MHH_KEY);
-        mButtonMhh.setOnPreferenceChangeListener(this);
-        mButtonTechnologyNews = (SwitchPreference) prefSet.findPreference(
+        mButtonTechnologyNews = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_TECHNOLOGY_NEWS_KEY);
-        mButtonTechnologyNews.setOnPreferenceChangeListener(this);
-        mButtonMultiCategory = (SwitchPreference) prefSet.findPreference(
+        mButtonMultiCategory = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_MULTI_CATEGORY_KEY);
-        mButtonMultiCategory.setOnPreferenceChangeListener(this);
 
-        mButtonLocal1 = (SwitchPreference) prefSet.findPreference(
+        mButtonLocal1 = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_LOCAL_GENERAL_NEWS_KEY);
-        mButtonLocal1.setOnPreferenceChangeListener(this);
-        mButtonRegional1 = (SwitchPreference) prefSet.findPreference(
+        mButtonRegional1 = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_REGIONAL_GENERAL_NEWS_KEY);
-        mButtonRegional1.setOnPreferenceChangeListener(this);
-        mButtonNational1 = (SwitchPreference) prefSet.findPreference(
+        mButtonNational1 = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_NATIONAL_GENERAL_NEWS_KEY);
-        mButtonNational1.setOnPreferenceChangeListener(this);
-        mButtonInternational1 = (SwitchPreference) prefSet.findPreference(
+        mButtonInternational1 = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_INTERNATIONAL_GENERAL_NEWS_KEY);
-        mButtonInternational1.setOnPreferenceChangeListener(this);
 
-        mButtonLocal2 = (SwitchPreference) prefSet.findPreference(
+        mButtonLocal2 = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_LOCAL_BF_NEWS_KEY);
-        mButtonLocal2.setOnPreferenceChangeListener(this);
-        mButtonRegional2 = (SwitchPreference) prefSet.findPreference(
+        mButtonRegional2 = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_REGIONAL_BF_NEWS_KEY);
-        mButtonRegional2.setOnPreferenceChangeListener(this);
-        mButtonNational2 = (SwitchPreference) prefSet.findPreference(
+        mButtonNational2 = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_NATIONAL_BF_NEWS_KEY);
-        mButtonNational2.setOnPreferenceChangeListener(this);
-        mButtonInternational2 = (SwitchPreference) prefSet.findPreference(
+        mButtonInternational2 = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_INTERNATIONAL_BF_NEWS_KEY);
-        mButtonInternational2.setOnPreferenceChangeListener(this);
 
-        mButtonLocal3 = (SwitchPreference) prefSet.findPreference(
+        mButtonLocal3 = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_LOCAL_SPORTS_NEWS_KEY);
-        mButtonLocal3.setOnPreferenceChangeListener(this);
-        mButtonRegional3 = (SwitchPreference) prefSet.findPreference(
+        mButtonRegional3 = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_REGIONAL_SPORTS_NEWS_KEY);
-        mButtonRegional3.setOnPreferenceChangeListener(this);
-        mButtonNational3 = (SwitchPreference) prefSet.findPreference(
+        mButtonNational3 = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_NATIONAL_SPORTS_NEWS_KEY);
-        mButtonNational3.setOnPreferenceChangeListener(this);
-        mButtonInternational3 = (SwitchPreference) prefSet.findPreference(
+        mButtonInternational3 = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_INTERNATIONAL_SPORTS_NEWS_KEY);
-        mButtonInternational3.setOnPreferenceChangeListener(this);
 
-        mButtonLocal4 = (SwitchPreference) prefSet.findPreference(
+        mButtonLocal4 = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_LOCAL_ENTERTAINMENT_NEWS_KEY);
-        mButtonLocal4.setOnPreferenceChangeListener(this);
-        mButtonRegional4 = (SwitchPreference) prefSet.findPreference(
+        mButtonRegional4 = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_REGIONAL_ENTERTAINMENT_NEWS_KEY);
-        mButtonRegional4.setOnPreferenceChangeListener(this);
-        mButtonNational4 = (SwitchPreference) prefSet.findPreference(
+        mButtonNational4 = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_NATIONAL_ENTERTAINMENT_NEWS_KEY);
-        mButtonNational4.setOnPreferenceChangeListener(this);
-        mButtonInternational4 = (SwitchPreference) prefSet.findPreference(
+        mButtonInternational4 = (CheckBoxPreference) prefSet.findPreference(
                 BUTTON_INTERNATIONAL_ENTERTAINMENT_NEWS_KEY);
-        mButtonInternational4.setOnPreferenceChangeListener(this);
     }
 
     @Override

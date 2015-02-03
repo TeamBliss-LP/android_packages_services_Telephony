@@ -22,29 +22,29 @@ import android.content.Context;
 import android.os.AsyncResult;
 import android.os.Handler;
 import android.os.Message;
-import android.preference.SwitchPreference;
+import android.preference.CheckBoxPreference;
 import android.util.AttributeSet;
 import android.util.Log;
 
-public class CdmaVoicePrivacySwitchPreference extends SwitchPreference {
-    private static final String LOG_TAG = "CdmaVoicePrivacySwitchPreference";
+public class CdmaVoicePrivacyCheckBoxPreference extends CheckBoxPreference {
+    private static final String LOG_TAG = "CdmaVoicePrivacyCheckBoxPreference";
     private final boolean DBG = (PhoneGlobals.DBG_LEVEL >= 2);
 
     Phone phone;
     private MyHandler mHandler = new MyHandler();
 
-    public CdmaVoicePrivacySwitchPreference(Context context, AttributeSet attrs, int defStyle) {
+    public CdmaVoicePrivacyCheckBoxPreference(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
         phone = PhoneGlobals.getPhone();
         phone.getEnhancedVoicePrivacy(mHandler.obtainMessage(MyHandler.MESSAGE_GET_VP));
     }
 
-    public CdmaVoicePrivacySwitchPreference(Context context, AttributeSet attrs) {
-        this(context, attrs, com.android.internal.R.attr.switchPreferenceStyle);
+    public CdmaVoicePrivacyCheckBoxPreference(Context context, AttributeSet attrs) {
+        this(context, attrs, com.android.internal.R.attr.checkBoxPreferenceStyle);
     }
 
-    public CdmaVoicePrivacySwitchPreference(Context context) {
+    public CdmaVoicePrivacyCheckBoxPreference(Context context) {
         this(context, null);
     }
 
