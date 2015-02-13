@@ -38,7 +38,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemProperties;
 import android.os.UserHandle;
-import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -502,20 +501,6 @@ public class CallFeaturesSetting extends PreferenceActivity
                 showDialogIfForeground(TTY_SET_RESPONSE_ERROR);
             }
             return true;
-        } else if (preference == mButtonAutoRetry) {
-            android.provider.Settings.Global.putInt(mPhone.getContext().getContentResolver(),
-                    android.provider.Settings.Global.CALL_AUTO_RETRY,
-                    mButtonAutoRetry.isChecked() ? 1 : 0);
-            return true;
-        } else if (preference == mButtonHAC) {
-            int hac = mButtonHAC.isChecked() ? 1 : 0;
-            // Update HAC value in Settings database
-            Settings.System.putInt(mPhone.getContext().getContentResolver(),
-                    Settings.System.HEARING_AID, hac);
-
-            // Update HAC Value in AudioManager
-            mAudioManager.setParameter(HAC_KEY, hac != 0 ? HAC_VAL_ON : HAC_VAL_OFF);
-            return true;
         } else if (preference == mIPPrefixPreference) {
             View v = getLayoutInflater().inflate(R.layout.ip_prefix, null);
             final EditText edit = (EditText) v.findViewById(R.id.ip_prefix_dialog_edit);
@@ -647,6 +632,18 @@ public class CallFeaturesSetting extends PreferenceActivity
                 mChangingVMorFwdDueToProviderChange = true;
                 saveVoiceMailAndForwardingNumber(newProviderKey, newProviderSettings);
             }
+        } else if (preference == mButtonAutoRetry) {
+            android.provider.Settings.Global.putInt(mPhone.getContext().getContentResolver(),
+                    android.provider.Settings.Global.CALL_AUTO_RETRY,
+                    (Boolean) objValue ? 1 : 0);
+        } else if (preference == mButtonHAC) {
+            int hac = (Boolean) objValue ? 1 : 0;
+            // Update HAC value in Settings database
+            Settings.System.putInt(mPhone.getContext().getContentResolver(),
+                    Settings.System.HEARING_AID, hac);
+
+            // Update HAC Value in AudioManager
+            mAudioManager.setParameter(HAC_KEY, hac != 0 ? HAC_VAL_ON : HAC_VAL_OFF);
         }
         // always let the preference setting proceed.
         return true;
