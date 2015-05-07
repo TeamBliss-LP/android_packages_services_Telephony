@@ -247,8 +247,7 @@ public class NetworkSetting extends PreferenceActivity
 
         if (!mIsForeground) {
             finish();
-        }
-        else {
+        } else {
             getPreferenceScreen().setEnabled(true);
             clearList();
             displayEmptyNetworkList(true);
@@ -453,9 +452,6 @@ public class NetworkSetting extends PreferenceActivity
      * remains unchanged.
      */
     private void networksListLoaded(List<OperatorInfo> result, int status) {
-        int orderPrioLow;
-        int orderPrioHigh;
-
         if (DBG) log("networks list loaded");
 
         // update the state of the preferences.
@@ -486,24 +482,38 @@ public class NetworkSetting extends PreferenceActivity
             if (result != null){
                 displayEmptyNetworkList(false);
 
+                TelephonyManager telephonyManager =
+                        (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+                String simOperatorName = telephonyManager.getSimOperatorName();
+
+                if (DBG) log("Default sim operator: " + simOperatorName);
+
                 // create a preference for each item in the list.
                 // just use the operator name instead of the mildly
                 // confusing mcc/mnc.
-                orderPrioLow = mNetworkList.getPreferenceCount();
-                orderPrioHigh = result.size() + 1;
+                int orderPrioMin = mNetworkList.getPreferenceCount();
+                int orderPrioLow = orderPrioMin + 1;
+                int orderPrioHigh = result.size() + 1;
                 for (OperatorInfo ni : result) {
                     Preference carrier = new Preference(this, null);
                     carrier.setTitle(getNetworkTitle(ni));
                     carrier.setPersistent(false);
+                    // arrange home (sim default) carrier to top and show sim icon
                     // arrange locked operators to bottom and show lock icon
+                    // arrange all others in between, show icon for currently selected network
                     if (ni.getState() == OperatorInfo.State.FORBIDDEN) {
-                        carrier.setIcon(getDrawable(R.drawable.ic_lock));
+                        carrier.setWidgetLayoutResource(R.layout.pref_network_select_lock);
                         carrier.setOrder(orderPrioHigh);
-                        orderPrioHigh = orderPrioHigh + 1;
-                    }
-                    else {
+                        orderPrioHigh++;
+                    } else if (TextUtils.equals(getNetworkTitle(ni), simOperatorName)) {
+                        carrier.setWidgetLayoutResource(R.layout.pref_network_select_sim);
+                        carrier.setOrder(orderPrioMin);
+                    } else {
+                        if (ni.getState() == OperatorInfo.State.CURRENT) {
+                            carrier.setWidgetLayoutResource(R.layout.pref_network_select_current);
+                        }
                         carrier.setOrder(orderPrioLow);
-                        orderPrioLow = orderPrioLow + 1;
+                        orderPrioLow++;
                     }
                     mNetworkList.addPreference(carrier);
                     mNetworkMap.put(carrier, ni);
@@ -515,6 +525,7 @@ public class NetworkSetting extends PreferenceActivity
             }
         }
     }
+
     private boolean  isDataDisableRequired() {
        boolean isRequired = getApplicationContext().getResources().getBoolean(
                 R.bool.config_disable_data_manual_plmn);
