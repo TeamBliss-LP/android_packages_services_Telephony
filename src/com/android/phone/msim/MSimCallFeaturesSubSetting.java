@@ -1704,8 +1704,8 @@ public class MSimCallFeaturesSubSetting extends PreferenceActivity
     }
 
     private boolean isAirplaneModeOn() {
-        return Settings.System.getInt(getContentResolver(),
-                Settings.System.AIRPLANE_MODE_ON, 0) != 0;
+        return Settings.Global.getInt(getContentResolver(),
+                Settings.Global.AIRPLANE_MODE_ON, 0) != 0;
     }
 
     private static void log(String msg) {
