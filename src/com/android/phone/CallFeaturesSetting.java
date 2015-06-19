@@ -214,6 +214,8 @@ public class CallFeaturesSetting extends PreferenceActivity
 
     private Intent mContactListIntent;
 
+    private static final String BUTTON_PROXIMITY_KEY   = "button_proximity_key";
+
     /** Event for Async voicemail change call */
     private static final int EVENT_VOICEMAIL_CHANGED        = 500;
     private static final int EVENT_FORWARDING_CHANGED       = 501;
@@ -623,6 +625,16 @@ public class CallFeaturesSetting extends PreferenceActivity
         } else if (preference == mButtonVideoCallPictureSelect) {
             startActivity(getVTCallImageSettingsIntent());
             return true;
+        } else if (preference == mButtonProximity) {
+            int checked = mButtonProximity.isChecked() ? 1 : 0;
+            Settings.System.putInt(mPhone.getContext().getContentResolver(),
+                    Settings.System.IN_CALL_PROXIMITY_SENSOR, checked);
+            if (checked == 1) {
+                mButtonProximity.setSummary(R.string.proximity_on_summary);
+            } else {
+                mButtonProximity.setSummary(R.string.proximity_off_summary);
+            }
+            return true;
         }
         return false;
     }
@@ -683,10 +695,6 @@ public class CallFeaturesSetting extends PreferenceActivity
                 mChangingVMorFwdDueToProviderChange = true;
                 saveVoiceMailAndForwardingNumber(newProviderKey, newProviderSettings);
             }
-        } else if (preference == mCallRecordingFormat) {
-            int value = Integer.valueOf((String) objValue);
-            int index = mCallRecordingFormat.findIndexOfValue((String) objValue);
-            Settings.System.putInt(cr, Settings.System.CALL_RECORDING_FORMAT, value);
         } else if (preference == mProxSpeakerDelay) {
             int delay = Integer.valueOf((String) objValue);
             Settings.System.putInt(cr,
@@ -1613,6 +1621,8 @@ public class CallFeaturesSetting extends PreferenceActivity
         super.onCreate(icicle);
         if (DBG) log("onCreate: Intent is " + getIntent());
 
+        PreferenceScreen preferenceScreen = getPreferenceScreen();
+
         // Make sure we are running as the primary user.
         if (UserHandle.myUserId() != UserHandle.USER_OWNER) {
             Toast.makeText(this, R.string.call_settings_primary_user_only,
@@ -1647,6 +1657,15 @@ public class CallFeaturesSetting extends PreferenceActivity
         // ACTION_ADD_VOICEMAIL action.
         mShowVoicemailPreference = (icicle == null) &&
                 TextUtils.equals(getIntent().getAction(), ACTION_ADD_VOICEMAIL);
+
+        if (mButtonProximity != null) {
+            if (getResources().getBoolean(R.bool.config_proximity_enable)) {
+                mButtonProximity.setOnPreferenceChangeListener(this);
+            } else {
+                getPreferenceScreen().removePreference(mButtonProximity);
+                mButtonProximity = null;
+            }
+        }
    }
 
     private void initPhoneAccountPreferences() {
@@ -1777,6 +1796,8 @@ public class CallFeaturesSetting extends PreferenceActivity
 
         mCallRecordingFormat = (ListPreference) findPreference(CALL_RECORDING_FORMAT);
         }
+
+        mButtonProximity = (SwitchPreference) findPreference(BUTTON_PROXIMITY_KEY);
 
         if (mButtonDTMF != null) {
             if (getResources().getBoolean(R.bool.dtmf_type_enabled)) {
@@ -2004,6 +2025,14 @@ public class CallFeaturesSetting extends PreferenceActivity
         // Look up the voicemail ringtone name asynchronously and update its preference.
         new Thread(mVoicemailRingtoneLookupRunnable).start();
         updateBlacklistSummary();
+
+        if (mButtonProximity != null) {
+            boolean checked = Settings.System.getInt(getContentResolver(),
+                    Settings.System.IN_CALL_PROXIMITY_SENSOR, 1) == 1;
+            mButtonProximity.setChecked(checked);
+            mButtonProximity.setSummary(checked ? R.string.proximity_on_summary
+                    : R.string.proximity_off_summary);
+        }
     }
 
     private void updateBlacklistSummary() {
