@@ -524,4 +524,45 @@
     <string name="enable_video_calling_dialog_msg" msgid="6547569773866546434">"如要開啟視訊通話，您必須在系統設定中啟用進階 4G LTE 模式。"</string>
     <string name="enable_video_calling_dialog_settings" msgid="576528473599603249">"網路設定"</string>
     <string name="enable_video_calling_dialog_close" msgid="7411471282167927991">"關閉"</string>
+    <string name="ipcall">IP電話設置</string>
+    <string name="ipcall_sub_title">IP電話設置</string>
+    <string name="ipcall_sub_summery">修改IP電話首碼</string>
+    <string name="ipcall_dialog_title">IP電話設置</string>
+    <string name="ipcall_dialog_edit_hint">請輸入IP電話首碼</string>
+    <!-- UPLMN Prefer -->
+    <string name="uplmn_list_setting_title">偏好設置</string>
+    <string name="network_id">網路 ID</string>
+    <string name="dialog_network_priority_title">優先順序</string>
+    <string name="uplmn_list_setting_add_plmn">新增 PLMN</string>
+    <string name="gsm_umts_network_preferences_title">網路模式</string>
+    <string name="gsm_umts_network_preferences_dialogtitle">網路模式</string>
+    <string name="new_sim_detected">發現新SIM卡:</string>
+    <string name="default_sim_setting">默認SIM卡設置:</string>
+    <string name="mobile_data">"移動資料: "</string>
+    <string name="slot">卡</string>
+    <string name="carrier_name">(運營商)</string>
+    <string name="mobile_data_on">開</string>
+    <string name="mobile_data_off">關</string>
+    <string name="sim_absent">無SIM卡</string>
+    <string name="sim_unknown">未知SIM卡</string>
+    <string name="multi_sim_settings_title">"雙卡設置"</string>
+    <string name="lte_switch_unavailable">4G/3G卡切換不可用</string>
+    <string name="lte_recognize_summary">檢測到兩張 4G/3G SIM卡，你需要設置預設的4G/3G SIM卡：</string>
+    <string name="lte_select_summary">所選擇卡將識別為4G/3G卡，另外一張為2G卡</string>
+    <string name="lte_checkbox_text">當默認4G/3G SIM卡變化，同時切換移動資料到選擇卡</string>
+    <string name="select_ok">確認</string>
+    <string name="lte_select_title">默認4G/3G SIM卡</string>
+    <string name="lte_recognition_title">SIM卡識別</string>
+    <string name="reg_failed">註冊失敗</string>
+    <string name="reg_suc">註冊成功</string>
+    <string name="reg_failed_msg">默認4G/3G SIM卡識別失敗， %1$s將被識別為2G卡。</string>
+    <string name="lte_set">設置</string>
+    <string name="lte_setting">正在設置默認4G/3G SIM 卡</string>
+    <string name="select_continue">繼續</string>
+    <string name="select_cancel">取消</string>
+    <string name="china_mobile">中國移動</string>
+    <string name="china_unicom">中國聯通</string>
+    <string name="china_telecom">中國電信</string>
+    <string name="preferred_lte">"啟用4G單數據"</string>
+    <string name="preferred_lte_summary">"啟用4G單數據時，語音和短信功能將不能使用"</string>
 </resources>
