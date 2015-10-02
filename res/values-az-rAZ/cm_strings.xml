@@ -121,6 +121,7 @@
   <string name="preferred_network_mode_wcdma_only_choice">Yalnız WCDMA</string>
   <string name="preferred_network_mode_gsm_only_choice">Yalnız GSM</string>
   <string name="preferred_network_mode_gsm_wcdma_preferred_choice">GSM/WCDMA üstünlük verilən</string>
+  <string name="preferred_network_mode_summary_mismatch"><xliff:g id="configured">%1$s</xliff:g> (hazırki: <xliff:g id="current">%2$s</xliff:g>)</string>
   <string name="callind_multi_sim">SIM kart tənzimləmələri</string>
   <string name="tty_mode_not_allowed_vt_call">Video zəng zamanı TTY rejimini dəyişdirməyə icazə verilmir</string>
   <string name="ipcall_sub_title">IP zəng tənzimləmələri</string>
@@ -167,4 +168,21 @@
   <string name="ims_vt_call_quality_set_failed">Video keyfiyyəti tənzimlənmədi</string>
   <string name="perm_change_mobile_network">şəbəkə rejimini dəyişdir (2G/3G)</string>
   <string name="perm_change_mobile_network_desc">Tətbiqetmənin 2G və 3G verilənləri arasında istənilən vaxt dəyişiklik etməsinə icazə verər. 3G çox sürətlidir, ancaq daha çox batareya sərfinə və əlavə xərclərə səbəb ola bilər.</string>
+  <string name="phone_number_label">Telefon nömrəm</string>
+  <string name="phone_number_summary">Bu cihaz üçün telefon nömrəsini tənzimlə</string>
+  <string name="msim_mobile_network_settings_title">SIM %d mobil şəbəkə tənzimləmələri</string>
+  <string name="call_recording_format">Zəng səsyazma formatı</string>
+  <string name="ims_get_packet_count_failed">Paket sayı alınmadı</string>
+  <string name="ims_get_packet_error_count_failed">Paket xəta sayı alınmadı</string>
+  <string name="ims_get_packet_count_label">Paket sayını almaq üçün toxunun</string>
+  <string name="ims_get_packet_error_count_label">Paket xəta sayını almaq üçün toxunun</string>
+  <string name="wifi_call_setting">Wi-Fi zəng tənzimləmələri</string>
+  <string name="wifi_calling_title">Wi-Fi zəng</string>
+  <string name="wifi_calling_preference_title">Wi-Fi zəng üstünlüyü</string>
+  <string name="ims_set_wifi_calling_preference_failed">Wi-Fi zəng üstünlüyü tənzimlənmədi</string>
+  <string name="wifi_pref_none">Üstünlük yoxdur</string>
+  <string name="wifi_preferred">Wi-Fi üstünlüklü</string>
+  <string name="wifi_only">Yalnız Wi-Fi</string>
+  <string name="cellular_preferred">Hüceyrəvi üstünlüklü</string>
+  <string name="cellular_only">Yalnız hüceyrəvi</string>
 </resources>
