@@ -47,7 +47,7 @@
   <string name="label_rcdp">PIN deblocare RUIM corporativ</string>
   <string name="label_rspdp">PIN deblocare furnizor de servicii RUIM</string>
   <string name="label_rdp">PIN deblocare RUIM</string>
-  <string name="label_puk">Introduceţi codul PUK</string>
+  <string name="label_puk">Introduceți codul PUK</string>
   <string name="requesting_unlock_cm">Se solicită codul SIM de deblocare rețea\u2026</string>
   <string name="requesting_nw_subset_unlock">Se solicită deblocare SIM pentru rețeaua subnet\u2026</string>
   <string name="requesting_sp_unlock">Se solicită deblocare SIM pentru furnizorul de servicii\u2026</string>
@@ -60,7 +60,7 @@
   <string name="requesting_rc_unlock">Se solicită deblocare RUIM corporativ\u2026</string>
   <string name="requesting_ruim_unlock">Se solicită deblocare RUIM\u2026</string>
   <string name="requesting_puk_unlock">Se solicită deblocare PUK\u2026</string>
-  <string name="unlock_failed_cm">Solicitare deblocare reţea SIM eşuată.</string>
+  <string name="unlock_failed_cm">Solicitare deblocare rețea SIM eșuată.</string>
   <string name="nw_subset_unlock_failed">Cererea de deblocare pentru rețeaua subnet SIM a eșuat.</string>
   <string name="sp_unlock_failed">Cererea de deblocare pentru furnizorul de servicii SIM a eșuat.</string>
   <string name="corporate_unlock_failed">Cererea de deblocare pentru SIM corporativ a eșuat.</string>
@@ -72,7 +72,7 @@
   <string name="rc_unlock_failed">Cererea de deblocare pentru RUIM corporativ a eșuat.</string>
   <string name="ruim_unlock_failed">Cererea de deblocare RUIM a eșuat.</string>
   <string name="puk_unlock_failed">Deblocarea PUK a eșuat.</string>
-  <string name="unlock_success_cm">Reţea SIM deblocată cu succes.</string>
+  <string name="unlock_success_cm">Rețea SIM deblocată cu succes.</string>
   <string name="nw_subset_unlock_success">Deblocarea SIM rețea subnet a reușit.</string>
   <string name="sp_unlock_success">Deblocarea furnizorului de servicii SIM a reușit.</string>
   <string name="corporate_unlock_success">Deblocarea SIM corporativ a reușit.</string>
@@ -108,6 +108,8 @@
   <string name="preferred_network_mode_td_scdma_gsm_wcdma_lte_summary">Mod rețea preferat: TD-SCDMA/GSM/WCDMA/LTE</string>
   <string name="preferred_network_mode_td_scdma_lte_cdma_evdo_gsm_wcdma_summary">Mod rețea preferat: TD-SCDMA/LTE/CDMA/EvDo/GSM/WCDMA</string>
   <string name="preferred_network_mode_td_scdma_cdma_evdo_gsm_wcdma_summary">Mod rețea preferat: TD-SCDMA/CDMA/EvDo/GSM/WCDMA</string>
+  <string name="callFailed_incoming_cb_enabled">Apelatul a blocat toate apelurile primite.</string>
+  <string name="callUnanswered_forwarded">Apel nerăspuns și redirecționat</string>
   <string name="preferred_network_mode_td_scdma_lte_gsm_wcdma_cdma_evdo_choice">TD-SCDMA/LTE/GSM/WCDMA/CDMA/EVDO</string>
   <string name="preferred_network_mode_td_scdma_gsm_wcdma_cdma_evdo_choice">TD-SCDMA/GSM/WCDMA/CDMA/EVDO</string>
   <string name="preferred_network_mode_td_scdma_gsm_wcdma_lte_choice">TD-SCDMA/GSM/WCDMA/LTE</string>
@@ -132,6 +134,7 @@
   <string name="preferred_network_mode_gsm_only_choice">doar GSM</string>
   <string name="preferred_network_mode_gsm_wcdma_preferred_choice">GSM/WCDMA preferat</string>
   <string name="callind_multi_sim">Setări cartelă SIM</string>
+  <string name="sim_card_title">Cartelă SIM %d</string>
   <string name="tty_mode_not_allowed_vt_call">Schimbarea modului TTY nu este permisă în timpul apelului video</string>
   <string name="ipcall_sub_title">Setări apel IP</string>
   <string name="ipcall_sub_summery">Editare prefix pentru apelare prin serviciul IP</string>
@@ -141,15 +144,15 @@
   <string name="exportContacts">Se exportă contactele în cardul SIM\u2026</string>
   <string name="simContacts_title_cm">Gestionează contactele de pe cartela SIM</string>
   <string name="contactScreen">Gestionare contacte SIM</string>
-  <string name="exportContactScreen">Exportaţi contactele din telefon în SIM</string>
+  <string name="exportContactScreen">Exportați contactele din telefon în SIM</string>
   <string name="addSimEntries">Adăugare contact în SIM</string>
-  <string name="deleteAllSimEntries">Şterge toate contactele din SIM</string>
+  <string name="deleteAllSimEntries">Șterge toate contactele din SIM</string>
   <string name="deleteSimContacts">Se șterg contactele din SIM\u2026</string>
   <string name="editContact">Editare</string>
   <string name="sendSms">Trimite SMS</string>
   <string name="delete">Ștergere</string>
   <string name="dial">Apelare</string>
-  <string name="enterName">Introduceţi numele:</string>
+  <string name="enterName">Introduceți numele:</string>
   <string name="enterNumber">Introduceți un număr de telefon:</string>
   <string name="hintName">Nume</string>
   <string name="hintPhonenumber">Număr de telefon</string>
@@ -165,12 +168,14 @@
   <string name="exportAllcontatsFailed">Nu s-a reușit exportarea tuturor contactelor în SIM</string>
   <string name="exportAllcontatsNoContacts">Fără contacte găsite pentru exportarea în SIM</string>
   <string name="uplmn_list_setting_title">Rețele preferate</string>
-  <string name="network_id">ID reţea</string>
+  <string name="network_id">ID rețea</string>
   <string name="dialog_network_priority_title">Prioritate</string>
   <string name="uplmn_list_setting_add_plmn">Nou PLMN</string>
   <string name="gsm_umts_network_preferences_title">Mod de rețea</string>
   <string name="gsm_umts_network_preferences_dialogtitle">Mod de rețea</string>
   <string name="sim_info">Informaţii cartelă SIM</string>
+  <string name="close">Închide</string>
+  <string name="change">Setați</string>
   <string name="new_sim_detected">Cartelă SIM nouă detectată:</string>
   <string name="default_sim_setting">Setări implicite:</string>
   <string name="mobile_data">Conexiune de date: <xliff:g id="status" example="enabled">%1$s</xliff:g></string>
@@ -182,8 +187,14 @@
   <string name="lte_switch_unavailable">Comutatorul de cartelă SIM 3G/LTE nu este disponibil</string>
   <string name="lte_recognition_title">Recunoaștere cartelă SIM</string>
   <string name="lte_recognize_summary">Două cartele SIM 3G/LTE sunt detectate, trebuie să setați cartela SIM 3G/LTE implicită:</string>
-  <string name="lte_select_summary">Abonamentul selectat va fi recunoscut ca o cartelă SIM 3G/LTE şi celălalt ca o cartelă SIM 2G.</string>
-  <string name="reg_suc">Înregistrare reuşită</string>
+  <string name="lte_select_title">Cartela 3G/LTE implicită</string>
+  <string name="lte_select_summary">Abonamentul selectat va fi recunoscut ca o cartelă SIM 3G/LTE și celălalt ca o cartelă SIM 2G.</string>
+  <string name="lte_checkbox_text">Setați conexiunea de date pe cartela SIM selectată odată ce cartela de 3G/LTE SIM implicită este schimbată</string>
+  <string name="reg_failed">Înregistrare eșuată</string>
+  <string name="reg_suc">Înregistrare reușită</string>
+  <string name="reg_failed_msg">Înregistrarea cartelei SIM 3G/LTE implicite nu a reușit, %1$s va fi recunoscută ca o cartelă SIM de 2G.</string>
+  <string name="lte_set">Setați</string>
+  <string name="lte_setting">Cartela 3G/LTE implicită este stabilită</string>
   <string name="china_mobile">China Mobile</string>
   <string name="china_unicom">China Unicom</string>
   <string name="china_telecom">China Telecom</string>

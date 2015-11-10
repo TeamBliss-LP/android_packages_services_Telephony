@@ -23,6 +23,7 @@ import android.telecom.Connection;
 import android.telecom.ConnectionRequest;
 import android.telecom.ConnectionService;
 import android.telecom.Conference;
+import android.telecom.DisconnectCause;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.telephony.PhoneNumberUtils;
@@ -120,7 +121,6 @@ public class TelephonyConnectionService extends ConnectionService {
         }
         mExpectedComponentName = new ComponentName(this, this.getClass());
         mEmergencyTonePlayer = new EmergencyTonePlayer(this);
-        TelecomAccountRegistry.getInstance(this).setTelephonyConnectionService(this);
     }
 
     @Override
@@ -200,7 +200,10 @@ public class TelephonyConnectionService extends ConnectionService {
         // when voice RAT is OOS but Data RAT is present.
         int state = phone.getServiceState().getState();
         if (state == ServiceState.STATE_OUT_OF_SERVICE) {
-            state = phone.getServiceState().getDataRegState();
+            if (phone.getServiceState().getDataNetworkType() ==
+                    ServiceState.RIL_RADIO_TECHNOLOGY_LTE) {
+                state = phone.getServiceState().getDataRegState();
+            }
         }
         boolean useEmergencyCallHelper = false;
 

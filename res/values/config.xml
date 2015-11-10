@@ -91,6 +91,9 @@
     <!-- Determines if device implements a noise suppression device for in call audio-->
     <bool name="has_in_call_noise_suppression">false</bool>
 
+    <!-- Audio parameter for setting noise suppression-->
+    <string name="in_call_noise_suppression_audioparameter">noise_suppression=on=off</string>
+
     <!-- Determines if the current device should allow emergency numbers
          to be logged in the Call Log.
          (Some carriers require that emergency calls *not* be logged,
@@ -123,13 +126,13 @@
     <bool name="config_enabled_lte" translatable="false">false</bool>
     <!-- Show cdma auto network mode in (glabal) roaming -->
     <integer-array name="config_show_cdma">
-        <item name="slot1">1</item>
-        <item name="slot2">1</item>
+        <item name="slot1">0</item>
+        <item name="slot2">0</item>
     </integer-array>
     <!-- Show roaming mode options for slot 1/2-->
     <integer-array name="config_show_roaming_mode_option">
-        <item name="slot1">1</item>
-        <item name="slot2">1</item>
+        <item name="slot1">0</item>
+        <item name="slot2">0</item>
     </integer-array>
 
     <!-- Package name for the default in-call UI and dialer [DO NOT TRANSLATE] -->

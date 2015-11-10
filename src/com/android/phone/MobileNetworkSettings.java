@@ -887,6 +887,9 @@ public class MobileNetworkSettings extends PreferenceActivity
                 b.create().show();
             }
             return true;
+        } else if (preference == mButtonNationalDataRoam) {
+            android.provider.Settings.System.putInt(mPhone.getContext().getContentResolver(),
+                    android.provider.Settings.System.MVNO_ROAMING, (Boolean) objValue ? 1 : 0);
         }
 
         // always let the preference setting proceed.

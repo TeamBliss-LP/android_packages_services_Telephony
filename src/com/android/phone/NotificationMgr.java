@@ -33,6 +33,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.pm.UserInfo;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.provider.Settings;
 import android.os.SystemProperties;
@@ -295,7 +296,7 @@ public class NotificationMgr {
                 R.drawable.stat_notify_voicemail_sub3};
 
         int notificationId = getNotificationId(VOICEMAIL_NOTIFICATION, phoneId);
-        int resId; 
+        int resId;
         if (visible) {
             if (Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.KEY_VOICEMAIL_BREATH, 0) == 1) {
@@ -393,14 +394,15 @@ public class NotificationMgr {
             }
 
             Notification.Builder builder = new Notification.Builder(mContext);
+            final Resources resources = mContext.getResources();
             builder.setSmallIcon(resId)
                     .setWhen(System.currentTimeMillis())
                     .setContentTitle(notificationTitle)
                     .setContentText(notificationText)
                     .setContentIntent(pendingIntent)
                     .setSound(ringtoneUri)
-                    .setColor(mContext.getResources().getColor(R.color.dialer_theme_color))
-                    .setOngoing(false);
+                    .setColor(resources.getColor(R.color.dialer_theme_color))
+                    .setOngoing(resources.getBoolean(R.bool.config_mwi_notification_ongoing));
 
             CallFeaturesSetting.migrateVoicemailVibrationSettingsIfNeeded(prefs, phoneId);
             final boolean vibrate = prefs.getBoolean(

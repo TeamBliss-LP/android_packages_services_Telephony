@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2015 The CyanogenMod Project
+<!-- Copyright (C) 2009 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,10 +14,14 @@
      limitations under the License.
 -->
 
+<!-- Phone app resources that may need to be customized
+     for different hardware or product builds. -->
 <resources>
-  <string-array name="dialer_default_classes" translatable="false">
-      <item>com.android.dialer/com.android.dialer.DialtactsActivity</item>
-  </string-array>
 
-    <bool name="config_mwi_notification_ongoing" translatable="false">false</bool>
+    <!-- Disable speaker proximity preference for problematic devices -->
+    <bool name="config_enabled_speakerprox" translatable="false">true</bool>
+
+    <!-- Flag whether to enable Proximity setting-->
+    <bool name="config_proximity_enable" translatable="false">true</bool>
+
 </resources>

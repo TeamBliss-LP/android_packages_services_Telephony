@@ -556,12 +556,12 @@ public class NetworkSetting extends PreferenceActivity
 
                     if (DBG) log("  " + ni);
                 }
+
             } else {
                 displayEmptyNetworkList();
             }
         }
     }
-
     private boolean  isDataDisableRequired() {
        boolean isRequired = getApplicationContext().getResources().getBoolean(
                 R.bool.config_disable_data_manual_plmn);
